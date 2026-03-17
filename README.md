@@ -96,7 +96,7 @@ python main.py api
 ## Project Structure
 
 ```
-pulse_pipeline/
+pulse-pipeline/
 ├── pulse/
 │   ├── db.py           # SQLite storage layer: all schema and queries
 │   ├── fetcher.py      # HTTP fetching with retry logic
