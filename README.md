@@ -7,22 +7,22 @@ A real-time data aggregation pipeline that continuously fetches, stores, and exp
 ## Architecture
 
 ```
-┌─────────────────┐     ┌──────────────────┐     ┌──────────────┐
-│   Data Sources  │     │    Pipeline       │     │   Storage    │
-│                 │     │                  │     │              │
-│  Open-Meteo API │────▶│  fetcher.py      │────▶│  SQLite      │
-│  (weather)      │     │  (HTTP + retry)  │     │  (WAL mode)  │
-│                 │     │                  │     │              │
-│  CoinGecko API  │────▶│  pipeline.py     │────▶│  Indexed     │
-│  (crypto)       │     │  (scheduling)    │     │  time-series │
-└─────────────────┘     └──────────────────┘     └──────┬───────┘
-                                                         │
-                                          ┌──────────────┼──────────────┐
-                                          │              │              │
-                                    ┌─────▼──────┐ ┌────▼──────┐ ┌────▼──────┐
-                                    │  REST API  │ │    CLI    │ │  Queries  │
-                                    │ (FastAPI)  │ │  (Rich)   │ │  (db.py)  │
-                                    └────────────┘ └───────────┘ └───────────┘
++-------------------+        +--------------------+        +-----------------+
+|    Data Sources   |        |      Pipeline      |        |     Storage     |
+|                   |        |                    |        |                 |
+|   Open-Meteo API  | -----> |    fetcher.py      | -----> |     SQLite      |
+|   (weather)       |        |   (HTTP + retry)   |        |   (WAL mode)    |
+|                   |        |                    |        |                 |
+|   CoinGecko API   | -----> |    pipeline.py     | -----> |  Indexed        |
+|   (crypto)        |        |   (scheduling)     |        |  time-series    |
++-------------------+        +--------------------+        +--------+--------+
+                                                                    |
+                                             +----------------------+----------------------+
+                                             |                      |                      |
+                                    +--------+-------+    +---------+------+    +----------+-----+
+                                    |    REST API    |    |      CLI       |    |    Queries     |
+                                    |   (FastAPI)    |    |    (Rich)      |    |    (db.py)     |
+                                    +----------------+    +----------------+    +----------------+
 ```
 
 **Data sources** — both free, no API key required:
