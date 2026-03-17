@@ -96,9 +96,9 @@ python main.py api
 ## Project Structure
 
 ```
-pulse/
+pulse_pipeline/
 ├── pulse/
-│   ├── db.py           # SQLite storage layer — all schema and queries
+│   ├── db.py           # SQLite storage layer: all schema and queries
 │   ├── fetcher.py      # HTTP fetching with retry logic
 │   ├── pipeline.py     # Orchestration and scheduling
 │   ├── api.py          # FastAPI REST server
@@ -107,7 +107,8 @@ pulse/
 │   ├── test_db.py      # 11 database unit tests (in-memory SQLite)
 │   └── test_fetcher.py # 6 fetcher unit tests (fully mocked)
 ├── main.py             # Entry point
-└── requirements.txt
+├── requirements.txt
+└── README.md
 ```
 
 ### Key implementation decisions
